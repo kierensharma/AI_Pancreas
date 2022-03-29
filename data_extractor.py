@@ -27,6 +27,15 @@ combined_dfs['Date-time'] = pd.to_datetime(combined_dfs['Date-time'])
 combined_dfs = combined_dfs.dropna()
 combined_dfs.set_index('Date-time', inplace=True)
 combined_dfs.sort_values(by='Date-time', ascending=True, inplace=True)
-print(combined_dfs)
 
-combined_dfs.to_csv('concat_data.csv')
+# combined_dfs.to_csv('concat_data.csv')
+
+# bloodsugar_codes = ['48','57','58','59','60','61','62','63','64']
+bloodsugar_df = combined_dfs.loc[(combined_dfs['Code']>=48) & (combined_dfs['Code']<=64)]
+bloodsugar_df.loc[bloodsugar_df['Code'] == 58, 'Event'] = 'Breakfast'
+bloodsugar_df.loc[bloodsugar_df['Code'] == 60, 'Event'] = 'Lunch'
+bloodsugar_df.loc[bloodsugar_df['Code'] == 62, 'Event'] = 'Dinner'
+bloodsugar_df.loc[bloodsugar_df['Code'] == 64, 'Event'] = 'Snack'
+
+print(bloodsugar_df)
+# bloodsugar_df.to_csv('bloodsugar_timeseries.csv')
