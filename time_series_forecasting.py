@@ -137,8 +137,12 @@ class RepeatBaseline(tf.keras.Model):
 
 def main():
     df = merge_data('noon2noon/labelled_interpolated_2min')
-    date_time = pd.to_datetime(df.pop('Timestamp'), format='%Y-%m-%d %H:%M:%S')
-    timestamp_s = date_time.map(datetime.datetime.timestamp)
+    # date_time = pd.to_datetime(df.pop('Timestamp'), format='%Y-%m-%d %H:%M:%S')
+    # timestamp_s = date_time.map(datetime.datetime.timestamp)
+
+    df = pd.read_csv('bloodsugar_timeseries.csv', parse_dates=[0])
+    pd.to_numeric(df['Value'])
+    df.set_index('Date-time', inplace=True)
 
     # Creation of 'time of day signal' due to periodicity of data
     day = 24*60*60
