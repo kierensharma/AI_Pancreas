@@ -144,6 +144,7 @@ class Baseline(tf.keras.Model):
 
 def main():
   df = pd.read_csv('Ivan_data.csv', parse_dates=[0])
+  df = df.iloc[9849:118339, :]
 
   date_time = pd.to_datetime(df.pop('Date-time'))
   timestamp_s = date_time.map(pd.Timestamp.timestamp)
@@ -226,6 +227,7 @@ def main():
     tf.keras.layers.Dense(units=1)
   ])
 
+  print('Linear')
   history = compile_and_fit(linear, single_step_window)
   val_performance['Linear'] = linear.evaluate(single_step_window.val)
   performance['Linear'] = linear.evaluate(single_step_window.test, verbose=0)
@@ -238,6 +240,7 @@ def main():
     tf.keras.layers.Dense(units=1)
 ])
 
+  print('Dense')
   history = compile_and_fit(dense, single_step_window)
   val_performance['Dense'] = dense.evaluate(single_step_window.val)
   performance['Dense'] = dense.evaluate(single_step_window.test, verbose=0)
@@ -254,6 +257,7 @@ def main():
       tf.keras.layers.Reshape([1, -1]),
   ])
 
+  print('Multi-step dense')
   history = compile_and_fit(multi_step_dense, conv_window)
   val_performance['Multi step dense'] = multi_step_dense.evaluate(conv_window.val)
   performance['Multi step dense'] = multi_step_dense.evaluate(conv_window.test, verbose=0)
@@ -269,6 +273,7 @@ def main():
     tf.keras.layers.Dense(units=1),
   ])
 
+  print('CNN')
   history = compile_and_fit(conv_model, conv_window)
   val_performance['Conv'] = conv_model.evaluate(conv_window.val)
   performance['Conv'] = conv_model.evaluate(conv_window.test, verbose=0)
@@ -283,6 +288,7 @@ def main():
     tf.keras.layers.Dense(units=1)
   ])
 
+  print('LSTM')
   history = compile_and_fit(lstm_model, wide_window)
   val_performance['LSTM'] = lstm_model.evaluate(wide_window.val)
   performance['LSTM'] = lstm_model.evaluate(wide_window.test, verbose=0)
