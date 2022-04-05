@@ -143,16 +143,7 @@ class Baseline(tf.keras.Model):
     return result[:, :, tf.newaxis]
 
 def main():
-  df = pd.read_csv('interpolated.csv', parse_dates=[0])
-  df.pop('Code')
-
-  # Adds column with rough carb intake
-  df.loc[df['Event'] == 'Breakfast', 'Carbs'] = 40
-  df.loc[df['Event'] == 'Lunch', 'Carbs'] = 50
-  df.loc[df['Event'] == 'Dinner', 'Carbs'] = 75
-  df.loc[df['Event'] == 'Snack', 'Carbs'] = 10
-  df.pop('Event')
-  df['Carbs'] = df['Carbs'].fillna(0)
+  df = pd.read_csv('Ivan_data.csv', parse_dates=[0])
 
   date_time = pd.to_datetime(df.pop('Date-time'))
   timestamp_s = date_time.map(pd.Timestamp.timestamp)
