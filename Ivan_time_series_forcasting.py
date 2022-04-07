@@ -309,6 +309,7 @@ def main():
   plt.xticks(ticks=x, labels=performance.keys(),
             rotation=45)
   plt.legend()
+  plt.savefig('Figures/Ivan_comparison_tight.pdf', bbox_inches='tight')
   plt.show()
 
 
